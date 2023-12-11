@@ -35,11 +35,11 @@ let questions = [
     {
         numb: 4,
         question: "JSで、'==='演算子は何を意味する?",
-        answer: "C. 同一性",
+        answer: "C. 厳密な等価性",
         options: [
             "A. 代入",
-            "B. 等価性",
-            "C. 同一性",
+            "B. 緩い等価性",
+            "C. 厳密な等価性",
             "D. 不等価性"
         ]
     },
