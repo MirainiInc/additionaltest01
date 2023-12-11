@@ -9,17 +9,17 @@ const resultBox = document.querySelector('.result-box');
 const tryAgainBtn = document.querySelector('.tryAgain-btn');
 const goHomeBtn = document.querySelector('.goHome-btn');
 
-startBtn.onclick = () => {
+startBtn.addEventListener('click', () => {
     popupInfo.classList.add('active');
     main.classList.add('active');
-}
+})
 
-exitBtn.onclick = () => {
+exitBtn.addEventListener('click', () => {
     popupInfo.classList.remove('active');
     main.classList.remove('active');
-}
+})
 
-continueBtn.onclick = () => {
+continueBtn.addEventListener('click', () => {
     quizSection.classList.add('active');
     popupInfo.classList.remove('active');
     main.classList.remove('active');
@@ -28,9 +28,9 @@ continueBtn.onclick = () => {
     showQuestions(0);
     questionCounter(1);
     headerScore();
-}
+})
 
-tryAgainBtn.onclick = () => {
+tryAgainBtn.addEventListener('click', () => {
     quizBox.classList.add('active');
     nextBtn.classList.remove('active');
     resultBox.classList.remove('active');
@@ -42,9 +42,9 @@ tryAgainBtn.onclick = () => {
     questionCounter(questionNumb);
 
     headerScore();
-}
+})
 
-goHomeBtn.onclick = () => {
+goHomeBtn.addEventListener('click', () => {
     quizSection.classList.remove('active');
     nextBtn.classList.remove('active');
     resultBox.classList.remove('active');
@@ -54,7 +54,7 @@ goHomeBtn.onclick = () => {
     userScore = 0;
     showQuestions(questionCount);
     questionCounter(questionNumb);
-}
+})
 
 let questionCount = 0;
 let questionNumb = 1;
@@ -62,7 +62,7 @@ let userScore = 0;
 
 const nextBtn = document.querySelector('.next-btn');
 
-nextBtn.onclick = () => {
+nextBtn.addEventListener('click', () => {
     if (questionCount < questions.length - 1) {
         questionCount++;
         showQuestions(questionCount);
@@ -75,7 +75,7 @@ nextBtn.onclick = () => {
     else {
         showResultBox();
     }
-}
+})
 
 const optionList = document.querySelector('.option-list');
 
@@ -93,7 +93,9 @@ function showQuestions(index) {
 
     const options = document.querySelectorAll('.option');
     for (const option of options) {
-        option.setAttribute('onclick', 'optionSelected(this)');
+        option.addEventListener('click', function () {
+            optionSelected(this);
+        })
     }
 }
 
