@@ -102,7 +102,7 @@ function optionSelected(answer) {
     let correctAnswer = questions[questionCount].answer;
     let allOptions = optionList.children.length;
 
-    if (userAnswer == correctAnswer) {
+    if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
         userScore += 1;
         headerScore();
@@ -112,7 +112,7 @@ function optionSelected(answer) {
 
         // if answer incorrect, auto selected correct answer
         for (let i = 0; i < allOptions; i++) {
-            if (optionList.children[i].textContent == correctAnswer) {
+            if (optionList.children[i].textContent === correctAnswer) {
                 optionList.children[i].setAttribute('class', 'option correct');
             }
         }
@@ -155,7 +155,7 @@ function showResultBox() {
         progressValue.textContent = `${progressStartValue}%`;
         circularProgress.style.background = `conic-gradient(#c40094 ${progressStartValue * 3.6}deg, rgba(255, 255, 255, .1) 0deg)`;
 
-        if (progressStartValue == progressEndValue) {
+        if (progressStartValue === progressEndValue) {
             clearInterval(progress);
         }
     }, speed);
