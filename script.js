@@ -113,7 +113,7 @@ function optionSelected(answer) {
         // if answer incorrect, auto selected correct answer
         for (const option of allOptions) {
             if (option.textContent === correctAnswer) {
-                option.setAttribute('class', 'option correct');
+                option.classList.add('correct');
             }
         }
     }
