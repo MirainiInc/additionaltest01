@@ -104,7 +104,7 @@ function optionSelected(answer) {
 
     if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
-        userScore += 1;
+        userScore++;
         headerScore();
     }
     else {
