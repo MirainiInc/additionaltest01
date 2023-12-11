@@ -91,16 +91,16 @@ function showQuestions(index) {
 
     optionList.innerHTML = optionTag;
 
-    const option = document.querySelectorAll('.option');
-    for (let i = 0; i < option.length; i++) {
-        option[i].setAttribute('onclick', 'optionSelected(this)');
+    const options = document.querySelectorAll('.option');
+    for (const option of options) {
+        option.setAttribute('onclick', 'optionSelected(this)');
     }
 }
 
 function optionSelected(answer) {
     let userAnswer = answer.textContent;
     let correctAnswer = questions[questionCount].answer;
-    let allOptions = optionList.children.length;
+    let allOptions = optionList.children;
 
     if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
@@ -111,16 +111,16 @@ function optionSelected(answer) {
         answer.classList.add('incorrect');
 
         // if answer incorrect, auto selected correct answer
-        for (let i = 0; i < allOptions; i++) {
-            if (optionList.children[i].textContent === correctAnswer) {
-                optionList.children[i].setAttribute('class', 'option correct');
+        for (const option of allOptions) {
+            if (option.textContent === correctAnswer) {
+                option.setAttribute('class', 'option correct');
             }
         }
     }
 
     // if user has selected, disabled all options
-    for (let i = 0; i < allOptions; i++) {
-        optionList.children[i].classList.add('disabled');
+    for (const option of allOptions) {
+        option.classList.add('disabled');
     }
 
     nextBtn.classList.add('active');
