@@ -8,6 +8,11 @@ const quizBox = document.querySelector('.quiz-box');
 const resultBox = document.querySelector('.result-box');
 const tryAgainBtn = document.querySelector('.tryAgain-btn');
 const goHomeBtn = document.querySelector('.goHome-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+let questionCount = 0;
+let questionNumb = 1;
+let userScore = 0;
 
 startBtn.addEventListener('click', () => {
     popupInfo.classList.add('active');
@@ -56,12 +61,6 @@ goHomeBtn.addEventListener('click', () => {
     questionCounter(questionNumb);
 })
 
-let questionCount = 0;
-let questionNumb = 1;
-let userScore = 0;
-
-const nextBtn = document.querySelector('.next-btn');
-
 nextBtn.addEventListener('click', () => {
     if (questionCount < questions.length - 1) {
         questionCount++;
@@ -71,8 +70,7 @@ nextBtn.addEventListener('click', () => {
         questionCounter(questionNumb);
 
         nextBtn.classList.remove('active');
-    }
-    else {
+    } else {
         showResultBox();
     }
 })
@@ -84,7 +82,7 @@ function showQuestions(index) {
     const questionText = document.querySelector('.question-text');
     questionText.textContent = `${questions[index].numb}. ${questions[index].question}`;
 
-    let optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
+    const optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
         <div class="option"><span>${questions[index].options[1]}</span></div>
         <div class="option"><span>${questions[index].options[2]}</span></div>
         <div class="option"><span>${questions[index].options[3]}</span></div>`;
@@ -100,16 +98,15 @@ function showQuestions(index) {
 }
 
 function optionSelected(answer) {
-    let userAnswer = answer.textContent;
-    let correctAnswer = questions[questionCount].answer;
-    let allOptions = optionList.children;
+    const userAnswer = answer.textContent;
+    const correctAnswer = questions[questionCount].answer;
+    const allOptions = optionList.children;
 
     if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
         userScore++;
         headerScore();
-    }
-    else {
+    } else {
         answer.classList.add('incorrect');
 
         // if answer incorrect, auto selected correct answer
@@ -148,10 +145,10 @@ function showResultBox() {
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
     let progressStartValue = -1;
-    let progressEndValue = (userScore / questions.length) * 100;
-    let speed = 20;
+    const progressEndValue = (userScore / questions.length) * 100;
+    const speed = 20;
 
-    let progress = setInterval(() => {
+    const progress = setInterval(() => {
         progressStartValue++;
 
         progressValue.textContent = `${progressStartValue}%`;
