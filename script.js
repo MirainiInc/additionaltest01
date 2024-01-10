@@ -11,7 +11,6 @@ const goHomeBtn = document.querySelector('.goHome-btn');
 const nextBtn = document.querySelector('.next-btn');
 
 let questionCount = 0;
-let questionNumb = 1;
 let userScore = 0;
 
 startBtn.addEventListener('click', () => {
@@ -31,7 +30,6 @@ continueBtn.addEventListener('click', () => {
     quizBox.classList.add('active');
 
     showQuestions(0);
-    questionCounter(1);
     headerScore();
 })
 
@@ -41,11 +39,8 @@ tryAgainBtn.addEventListener('click', () => {
     resultBox.classList.remove('active');
 
     questionCount = 0;
-    questionNumb = 1;
     userScore = 0;
     showQuestions(questionCount);
-    questionCounter(questionNumb);
-
     headerScore();
 })
 
@@ -55,19 +50,14 @@ goHomeBtn.addEventListener('click', () => {
     resultBox.classList.remove('active');
 
     questionCount = 0;
-    questionNumb = 1;
     userScore = 0;
     showQuestions(questionCount);
-    questionCounter(questionNumb);
 })
 
 nextBtn.addEventListener('click', () => {
     if (questionCount < questions.length - 1) {
         questionCount++;
         showQuestions(questionCount);
-
-        questionNumb++;
-        questionCounter(questionNumb);
 
         nextBtn.classList.remove('active');
     } else {
@@ -79,6 +69,8 @@ const optionList = document.querySelector('.option-list');
 
 // getting questions and options from array
 function showQuestions(index) {
+    questionCounter(index)
+
     const questionText = document.querySelector('.question-text');
     questionText.textContent = `${questions[index].numb}. ${questions[index].question}`;
 
@@ -127,7 +119,7 @@ function optionSelected(answer) {
 
 function questionCounter(index) {
     const questionTotal = document.querySelector('.question-total');
-    questionTotal.textContent = `第${index}問`;
+    questionTotal.textContent = `第${index + 1}問`;
 }
 
 function headerScore() {
