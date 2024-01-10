@@ -8,18 +8,23 @@ const quizBox = document.querySelector('.quiz-box');
 const resultBox = document.querySelector('.result-box');
 const tryAgainBtn = document.querySelector('.tryAgain-btn');
 const goHomeBtn = document.querySelector('.goHome-btn');
+const nextBtn = document.querySelector('.next-btn');
 
-startBtn.onclick = () => {
+let questionCount = 0;
+let questionNumb = 1;
+let userScore = 0;
+
+startBtn.addEventListener('click', () => {
     popupInfo.classList.add('active');
     main.classList.add('active');
-}
+})
 
-exitBtn.onclick = () => {
+exitBtn.addEventListener('click', () => {
     popupInfo.classList.remove('active');
     main.classList.remove('active');
-}
+})
 
-continueBtn.onclick = () => {
+continueBtn.addEventListener('click', () => {
     quizSection.classList.add('active');
     popupInfo.classList.remove('active');
     main.classList.remove('active');
@@ -28,9 +33,9 @@ continueBtn.onclick = () => {
     showQuestions(0);
     questionCounter(1);
     headerScore();
-}
+})
 
-tryAgainBtn.onclick = () => {
+tryAgainBtn.addEventListener('click', () => {
     quizBox.classList.add('active');
     nextBtn.classList.remove('active');
     resultBox.classList.remove('active');
@@ -42,9 +47,9 @@ tryAgainBtn.onclick = () => {
     questionCounter(questionNumb);
 
     headerScore();
-}
+})
 
-goHomeBtn.onclick = () => {
+goHomeBtn.addEventListener('click', () => {
     quizSection.classList.remove('active');
     nextBtn.classList.remove('active');
     resultBox.classList.remove('active');
@@ -54,15 +59,9 @@ goHomeBtn.onclick = () => {
     userScore = 0;
     showQuestions(questionCount);
     questionCounter(questionNumb);
-}
+})
 
-let questionCount = 0;
-let questionNumb = 1;
-let userScore = 0;
-
-const nextBtn = document.querySelector('.next-btn');
-
-nextBtn.onclick = () => {
+nextBtn.addEventListener('click', () => {
     if (questionCount < questions.length - 1) {
         questionCount++;
         showQuestions(questionCount);
@@ -71,11 +70,10 @@ nextBtn.onclick = () => {
         questionCounter(questionNumb);
 
         nextBtn.classList.remove('active');
-    }
-    else {
+    } else {
         showResultBox();
     }
-}
+})
 
 const optionList = document.querySelector('.option-list');
 
@@ -84,43 +82,44 @@ function showQuestions(index) {
     const questionText = document.querySelector('.question-text');
     questionText.textContent = `${questions[index].numb}. ${questions[index].question}`;
 
-    let optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
+    const optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
         <div class="option"><span>${questions[index].options[1]}</span></div>
         <div class="option"><span>${questions[index].options[2]}</span></div>
         <div class="option"><span>${questions[index].options[3]}</span></div>`;
 
     optionList.innerHTML = optionTag;
 
-    const option = document.querySelectorAll('.option');
-    for (let i = 0; i < option.length; i++) {
-        option[i].setAttribute('onclick', 'optionSelected(this)');
+    const options = document.querySelectorAll('.option');
+    for (const option of options) {
+        option.addEventListener('click', function () {
+            optionSelected(this);
+        })
     }
 }
 
 function optionSelected(answer) {
-    let userAnswer = answer.textContent;
-    let correctAnswer = questions[questionCount].answer;
-    let allOptions = optionList.children.length;
+    const userAnswer = answer.textContent;
+    const correctAnswer = questions[questionCount].answer;
+    const allOptions = optionList.children;
 
-    if (userAnswer == correctAnswer) {
+    if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
-        userScore += 1;
+        userScore++;
         headerScore();
-    }
-    else {
+    } else {
         answer.classList.add('incorrect');
 
         // if answer incorrect, auto selected correct answer
-        for (let i = 0; i < allOptions; i++) {
-            if (optionList.children[i].textContent == correctAnswer) {
-                optionList.children[i].setAttribute('class', 'option correct');
+        for (const option of allOptions) {
+            if (option.textContent === correctAnswer) {
+                option.classList.add('correct');
             }
         }
     }
 
     // if user has selected, disabled all options
-    for (let i = 0; i < allOptions; i++) {
-        optionList.children[i].classList.add('disabled');
+    for (const option of allOptions) {
+        option.classList.add('disabled');
     }
 
     nextBtn.classList.add('active');
@@ -146,16 +145,16 @@ function showResultBox() {
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
     let progressStartValue = -1;
-    let progressEndValue = (userScore / questions.length) * 100;
-    let speed = 20;
+    const progressEndValue = (userScore / questions.length) * 100;
+    const speed = 20;
 
-    let progress = setInterval(() => {
+    const progress = setInterval(() => {
         progressStartValue++;
 
         progressValue.textContent = `${progressStartValue}%`;
         circularProgress.style.background = `conic-gradient(#c40094 ${progressStartValue * 3.6}deg, rgba(255, 255, 255, .1) 0deg)`;
 
-        if (progressStartValue == progressEndValue) {
+        if (progressStartValue === progressEndValue) {
             clearInterval(progress);
         }
     }, speed);
